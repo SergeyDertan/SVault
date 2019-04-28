@@ -1,0 +1,30 @@
+name: "${pom.artifactId}"
+main: Sergey_Dertan.SVault.main.SVaultMain
+api: [1.0.0]
+version: "${pom.version}"
+author: Sergey_Dertan
+website: https://vk.com/sergey_dertan
+load: STARTUP
+prefix: '§eSVault§f'
+permissions:
+  svault.*:
+    default: false
+    children:
+      svault.admin:
+        default: op
+        children:
+          svault.command.*:
+            default: op
+            children:
+              svault.command.create:
+                default: true
+              svault.command.open:
+                default: true
+              svault.command.remove:
+                default: true
+              svault.command.list:
+                default: true
+              svault.command.save:
+                default: op
+              svault.command.vault:
+                default: true

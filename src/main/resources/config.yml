@@ -1,0 +1,7 @@
+default-max-vaults: 2
+update-notifier: true
+provider: yml
+language: default
+
+auto-save: true
+auto-save-period: 240

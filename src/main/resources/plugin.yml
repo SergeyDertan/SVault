@@ -10,6 +10,8 @@ permissions:
   svault.*:
     default: false
     children:
+      svault.amount.*:
+        default: op
       svault.admin:
         default: op
         children:

@@ -4,9 +4,9 @@ import Sergey_Dertan.SVault.provider.dataobject.VaultDataObject
 
 interface DataProvider {
 
-    fun loadVaultList(): List<VaultDataObject>
+    fun loadVaultList(): Collection<VaultDataObject>
 
-    fun loadVault(player: String, name: String): VaultDataObject
+    fun loadVault(player: String, name: String): VaultDataObject?
 
     fun saveVault(vdo: VaultDataObject)
 
@@ -18,13 +18,21 @@ interface DataProvider {
 
     fun getType(): Type
 
+    fun close() {}
+
     enum class Type {
         YAML,
+        MYSQL,
+        SQLITE,
+        POSTGRESQL,
         UNKNOWN;
 
         companion object {
             fun fromString(name: String): Type = when (name.toLowerCase()) {
                 "yml", "yaml" -> YAML
+                "mysql" -> MYSQL
+                "sqlite", "sqlite3" -> SQLITE
+                "postgresql", "postgres" -> POSTGRESQL
                 else -> UNKNOWN
             }
         }

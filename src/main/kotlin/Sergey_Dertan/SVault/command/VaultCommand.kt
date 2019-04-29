@@ -1,6 +1,5 @@
 package Sergey_Dertan.SVault.command
 
-import Sergey_Dertan.SVault.main.SVaultMain
 import Sergey_Dertan.SVault.messenger.Messenger
 import cn.nukkit.command.Command
 import cn.nukkit.command.CommandSender

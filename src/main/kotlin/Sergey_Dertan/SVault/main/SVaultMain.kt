@@ -6,6 +6,9 @@ import Sergey_Dertan.SVault.event.NotifierEventHandler
 import Sergey_Dertan.SVault.messenger.Messenger
 import Sergey_Dertan.SVault.provider.DataProvider
 import Sergey_Dertan.SVault.provider.YAMLDataProvider
+import Sergey_Dertan.SVault.provider.database.MySQLDataProvider
+import Sergey_Dertan.SVault.provider.database.PostgreSQLDataProvider
+import Sergey_Dertan.SVault.provider.database.SQLiteDataProvider
 import Sergey_Dertan.SVault.settings.Settings
 import Sergey_Dertan.SVault.utils.Utils.compareVersions
 import Sergey_Dertan.SVault.utils.Utils.httpGetRequestJson
@@ -39,6 +42,7 @@ class SVaultMain : PluginBase() {
         val MAIN_FOLDER = Server.getInstance().dataPath + "Sergey_Dertan_Plugins/SVault/"
         val LANG_FOLDER = MAIN_FOLDER + "Lang/"
         val VAULTS_FOLDER = MAIN_FOLDER + "Vaults/"
+        val DB_FOLDER = MAIN_FOLDER + "DB/"
         const val VERSION_URL = "https://api.github.com/repos/SergeyDertan/SVault/releases/latest"
 
         private lateinit var instance: SVaultMain
@@ -91,6 +95,21 @@ class SVaultMain : PluginBase() {
         try {
             when (type) {
                 DataProvider.Type.YAML -> return YAMLDataProvider()
+                DataProvider.Type.SQLITE -> {
+                    this.loadSQLiteLibraries()
+                    this.loadDBLibraries()
+                    return SQLiteDataProvider(this.settings.sqliteSettings)
+                }
+                DataProvider.Type.MYSQL -> {
+                    this.loadMySQLLibrary()
+                    this.loadDBLibraries()
+                    return MySQLDataProvider(this.settings.mySQLSettings)
+                }
+                DataProvider.Type.POSTGRESQL -> {
+                    this.loadPostgreSQLLibraries()
+                    this.loadDBLibraries()
+                    return PostgreSQLDataProvider(this.settings.postgreSQLSettings)
+                }
                 else -> throw RuntimeException("Unknown provider")
             }
         } catch (e: Exception) {
@@ -129,7 +148,6 @@ class SVaultMain : PluginBase() {
         try {
             this.provider = this.getProviderInstance(this.settings.provider)
             this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.data-provider", "@name", this.settings.provider.name))
-            return true
         } catch (e: Exception) {
             this.logger.alert(TextFormat.RED.toString() + this.messenger.getMessage("loading.error.data-provider-error", arrayOf("@err", "@provider"), arrayOf(e.message as String, this.settings.provider.name)))
             this.forceShutdown = true
@@ -137,7 +155,7 @@ class SVaultMain : PluginBase() {
             this.pluginLoader.disablePlugin(this)
             return false
         }
-
+        return true
     }
 
     private fun loadLibraries(): Boolean {
@@ -154,12 +172,28 @@ class SVaultMain : PluginBase() {
         return true
     }
 
+    private fun loadDBLibraries() {
+        LibraryLoader.load("org.datanucleus:datanucleus-api-jdo:5.2.0-release")
+        LibraryLoader.load("org.datanucleus:datanucleus-rdbms:5.2.0-release")
+    }
+
+    private fun loadMySQLLibrary() {
+        LibraryLoader.load("mysql:mysql-connector-java:8.0.15")
+    }
+
+    private fun loadSQLiteLibraries() {
+        LibraryLoader.load("org.xerial:sqlite-jdbc:3.27.2.1")
+    }
+
+    private fun loadPostgreSQLLibraries() {
+        LibraryLoader.load("postgresql:postgresql:9.1-901-1.jdbc4")
+    }
+
     private fun initEventHandler() = this.server.pluginManager.registerEvents(InventoryEventHandler(), this)
 
     private fun initSettings(): Boolean {
         try {
             this.settings = Settings()
-            return true
         } catch (e: Exception) {
             this.logger.info(TextFormat.RED.toString() + this.messenger.getMessage("loading.error.resource", "@err", e.message as String))
             this.forceShutdown = true
@@ -167,11 +201,11 @@ class SVaultMain : PluginBase() {
             this.pluginLoader.disablePlugin(this)
             return false
         }
-
+        return true
     }
 
     private fun createDirectories(): Boolean {
-        return this.createFolder(MAIN_FOLDER) && this.createFolder(LANG_FOLDER) && this.createFolder(VAULTS_FOLDER)
+        return this.createFolder(MAIN_FOLDER) && this.createFolder(LANG_FOLDER) && this.createFolder(VAULTS_FOLDER) && this.createFolder(DB_FOLDER)
     }
 
     private fun createFolder(path: String): Boolean {
@@ -188,7 +222,6 @@ class SVaultMain : PluginBase() {
     private fun initMessenger(): Boolean {
         try {
             this.messenger = Messenger()
-            return true
         } catch (e: Exception) {
             this.logger.alert(TextFormat.RED.toString() + "Messenger initializing error")
 
@@ -199,15 +232,16 @@ class SVaultMain : PluginBase() {
             this.pluginLoader.disablePlugin(this)
             return false
         }
+        return true
     }
 
     private fun checkUpdate() {
         try {
             val response = httpGetRequestJson(VERSION_URL)
-            val ver = response.get("tag_name") as String
-            val description = response.get("name") as String
+            val ver = response["tag_name"] as String
+            val description = response["name"] as String
             if (ver.isEmpty()) return
-            if (compareVersions(this.description.version, ver).equals(ver)) {
+            if (compareVersions(this.description.version, ver) == ver) {
                 this.logger.info(this.messenger.getMessage("loading.init.update-available", "@ver", ver))
                 this.logger.info(this.messenger.getMessage("loading.init.update-description", "@description", description))
 

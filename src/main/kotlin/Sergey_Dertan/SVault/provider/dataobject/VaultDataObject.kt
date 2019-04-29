@@ -4,11 +4,21 @@ import cn.nukkit.item.Item
 import cn.nukkit.nbt.NBTIO
 import com.google.gson.Gson
 import java.nio.ByteOrder
+import javax.jdo.annotations.Column
 import javax.jdo.annotations.PersistenceCapable
 import javax.jdo.annotations.Persistent
 
 @PersistenceCapable(table = "svvaults", detachable = "true")
-class VaultDataObject(@Persistent(name = "player") val player: String, @Persistent(name = "name") val name: String, @Persistent(name = "items") val items: String) {
+class VaultDataObject(player_: String, name_: String, items_: String) {
+
+    @Persistent(name = "player")
+    var player = player_
+
+    @Persistent(name = "name")
+    var name = name_
+
+    @Column(name = "items", jdbcType = "LONGVARCHAR")
+    var items = items_
 
     companion object {
         fun fromDataObject(vdo: VaultDataObject): Map<Int, Item> {

@@ -7,7 +7,7 @@ import java.io.File
 
 class YAMLDataProvider : DataProvider {
 
-    override fun loadVault(player: String, name: String): VaultDataObject {
+    override fun loadVault(player: String, name: String): VaultDataObject? {
         val file = File("$VAULTS_FOLDER$player$name.yml")
         if (!file.exists()) return VaultDataObject("", "", "")
         val f = Config(file, Config.YAML)

@@ -24,7 +24,7 @@ class VaultListCommand(vaultManager: VaultManager) : SVaultCommand("list", vault
                 this.messenger.sendMessage(sender, "command.list.in-game")
                 return false
             }
-            this.messenger.sendMessage(sender, "command.list.list.own", "@list", this.vaultManager.getVaultList(sender.name).joinToString { "," })
+            this.messenger.sendMessage(sender, "command.list.list.own", "@list", this.vaultManager.getVaultList(sender.name).joinToString { ", " })
         } else {
             if (!sender.hasPermission("svault.admin")) {
                 this.messenger.sendMessage(sender, "command.list.permission")

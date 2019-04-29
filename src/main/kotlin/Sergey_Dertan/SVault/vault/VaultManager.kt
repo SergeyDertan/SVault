@@ -21,6 +21,7 @@ import java.util.*
 class VaultManager(private val settings: Settings, private val provider: DataProvider, logger: Logger) {
 
     private val vaults: MutableMap<String, MutableMap<String, VaultInventory>>
+    private var last = mutableMapOf<Int, String>()
 
     init {
         this.vaults = TreeMap(String.CASE_INSENSITIVE_ORDER)
@@ -54,7 +55,10 @@ class VaultManager(private val settings: Settings, private val provider: DataPro
         val pos = sendFakeChest(player, name)
         (inventory?.holder as Vector3).setComponents(pos.x, pos.y, pos.z)
         player.addWindow(inventory)
+        this.last[player.loaderId] = name
     }
+
+    fun getLastVault(player: Player): String = last.getOrDefault(player.loaderId, "")
 
     fun createVault(player: Player, name: String) {
         this.vaults.computeIfAbsent(player.name) { TreeMap(String.CASE_INSENSITIVE_ORDER) }[name] = VaultInventory()

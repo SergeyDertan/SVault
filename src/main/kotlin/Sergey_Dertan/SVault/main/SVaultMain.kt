@@ -10,6 +10,7 @@ import Sergey_Dertan.SVault.provider.database.MySQLDataProvider
 import Sergey_Dertan.SVault.provider.database.PostgreSQLDataProvider
 import Sergey_Dertan.SVault.provider.database.SQLiteDataProvider
 import Sergey_Dertan.SVault.settings.Settings
+import Sergey_Dertan.SVault.utils.PlaceholdersLoader
 import Sergey_Dertan.SVault.utils.Utils.compareVersions
 import Sergey_Dertan.SVault.utils.Utils.httpGetRequestJson
 import Sergey_Dertan.SVault.vault.VaultManager
@@ -78,6 +79,10 @@ class SVaultMain : PluginBase() {
         this.initCommands()
 
         this.initAutoSave()
+
+        instance = this
+
+        this.loadPlaceholers()
 
         this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.successful", "@time", (System.currentTimeMillis() - start).toString()))
 
@@ -250,6 +255,12 @@ class SVaultMain : PluginBase() {
                 }
             }
         } catch (ignore: Exception) {
+        }
+    }
+
+    private fun loadPlaceholers() {
+        if (this.server.pluginManager.getPlugin("PlaceholderAPI") != null) {
+            PlaceholdersLoader
         }
     }
 

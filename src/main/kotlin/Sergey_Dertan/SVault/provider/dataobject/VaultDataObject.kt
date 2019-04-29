@@ -18,12 +18,14 @@ class VaultDataObject(@Persistent(name = "player") val player: String, @Persiste
             for ((invId, itemData) in Gson().fromJson(vdo.items, Map::class.java) as Map<String, Map<String, Any>>) {
                 val id = (itemData["id"] as Number).toInt()
                 val meta = (itemData["meta"] as Number).toInt()
+                val amount = (itemData["amount"] as Number).toInt()
 
                 val item = Item.get(id, meta)
                 itemData["nbt"]?.let {
-                    val nbt = NBTIO.read(it as ByteArray, ByteOrder.LITTLE_ENDIAN)
-                    item.namedTag = nbt
+                    val nbt = NBTIO.read((it as List<Byte>).toByteArray(), ByteOrder.LITTLE_ENDIAN)
+                    item.setNamedTag(nbt)
                 }
+                item.count = amount
                 items[invId.toInt()] = item
             }
             return items
@@ -36,6 +38,7 @@ class VaultDataObject(@Persistent(name = "player") val player: String, @Persiste
                 val itemData = mutableMapOf<String, Any>()
                 itemData["id"] = item.id
                 itemData["meta"] = item.damage
+                itemData["amount"] = item.count
                 item.namedTag?.let {
                     itemData["nbt"] = NBTIO.write(it, ByteOrder.LITTLE_ENDIAN)
                 }

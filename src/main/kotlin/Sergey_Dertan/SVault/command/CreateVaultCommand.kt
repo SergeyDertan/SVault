@@ -31,6 +31,10 @@ class CreateVaultCommand(vaultManager: VaultManager) : SVaultCommand("create", v
             this.messenger.sendMessage(sender, "command.create.usage")
             return false
         }
+        if (!args[0].matches(Regex("[a-zA-Z0-9]*"))) {
+            this.messenger.sendMessage(sender, "command.create.wrong-name")
+            return false
+        }
         if (this.vaultManager.vaultExists(sender.name, args[0])) {
             this.messenger.sendMessage(sender, "command.create.exists")
             return false

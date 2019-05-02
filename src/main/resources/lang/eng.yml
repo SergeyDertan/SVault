@@ -58,4 +58,11 @@ command.list.in-game: "In game only"
 command.list.list.own: "Your vaults: {@list}"
 command.list.list.other: "{@player}`s vaults: {@list}"
 
+command.migrate.permission: "You have no permission"
+command.migrate.usage: "Required arguments: [FROM] [TO]"
+command.migrate.description: "Migrate"
+command.migrate.same-provider: "You entered two equal providers"
+command.migrate.error: "Cannot instantiate data provider {@provider}"
+command.migrate.success: "Successfully copied {@amount} vaults"
+
 vault-inventory-name: "Vault {@name}"

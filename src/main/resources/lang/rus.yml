@@ -58,4 +58,11 @@ command.list.in-game: "Только в игре"
 command.list.list.own: "Ваши хранилища: {@list}"
 command.list.list.other: "Хранилища игрока {@player}: {@list}"
 
+command.migrate.permission: "Недостаточно прав"
+command.migrate.usage: "Необходимые аргументы: [ИСТОЧНИК] [ЦЕЛЬ]"
+command.migrate.description: "Migrate"
+command.migrate.same-provider: "Одинаковые поставщики данных"
+command.migrate.error: "Не удалось создать поставщик данных {@provider}"
+command.migrate.success: "Скопировано {@amount} хранилищ"
+
 vault-inventory-name: "Хранилище {@name}"

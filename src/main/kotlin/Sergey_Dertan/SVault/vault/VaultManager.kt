@@ -85,10 +85,10 @@ class VaultManager(private val settings: Settings, private val provider: DataPro
 
     fun vaultExists(owner: String, name: String): Boolean = this.vaults.getOrDefault(owner, Collections.emptyMap()).containsKey(name)
 
-    fun getVaultList(player: String): Array<String> {
+    fun getVaultList(player: String): List<String> {
         val list = mutableListOf<String>()
         this.vaults.getOrDefault(player, Collections.emptyMap()).keys.forEach { list.add(it) }
-        return list.toTypedArray()
+        return list
     }
 
     private fun sendFakeChest(player: Player, name: String): Vector3 {

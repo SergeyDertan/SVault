@@ -30,3 +30,5 @@ permissions:
                 default: op
               svault.command.vault:
                 default: true
+              svault.command.migrate:
+                default: op

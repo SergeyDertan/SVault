@@ -30,7 +30,7 @@ class VaultListCommand(vaultManager: VaultManager) : SVaultCommand("list", vault
                 this.messenger.sendMessage(sender, "command.list.permission")
                 return false
             }
-            this.messenger.sendMessage(sender, "command.list.list.other", arrayOf("@player", "@list"), arrayOf(args[0], this.vaultManager.getVaultList(args[0]).joinToString { "$it," }))
+            this.messenger.sendMessage(sender, "command.list.list.other", arrayOf("@player", "@list"), arrayOf(args[0], this.vaultManager.getVaultList(args[0]).joinToString()))
         }
         return true
     }

@@ -10,6 +10,7 @@ import Sergey_Dertan.SVault.provider.database.MySQLDataProvider
 import Sergey_Dertan.SVault.provider.database.PostgreSQLDataProvider
 import Sergey_Dertan.SVault.provider.database.SQLiteDataProvider
 import Sergey_Dertan.SVault.settings.Settings
+import Sergey_Dertan.SVault.utils.DataProviderException
 import Sergey_Dertan.SVault.utils.PlaceholdersLoader
 import Sergey_Dertan.SVault.utils.Utils.compareVersions
 import Sergey_Dertan.SVault.utils.Utils.httpGetRequestJson
@@ -118,7 +119,7 @@ class SVaultMain : PluginBase() {
                 else -> throw RuntimeException("Unknown provider")
             }
         } catch (e: Exception) {
-            throw RuntimeException("Cannot instantiate provider " + type.name, e)
+            throw DataProviderException("Cannot instantiate provider " + type.name, e, type)
         }
     }
 
@@ -147,6 +148,7 @@ class SVaultMain : PluginBase() {
         this.registerCommand(OpenVaultCommand(this.vaultManager))
         this.registerCommand(VaultListCommand(this.vaultManager))
         this.registerCommand(SaveCommand(this))
+        this.registerCommand(MigrateCommand(this))
     }
 
     private fun initDataProvider(): Boolean {

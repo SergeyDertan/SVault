@@ -38,15 +38,17 @@ class VaultManager(private val settings: Settings, private val provider: DataPro
     fun hasAmountPermission(player: Player, amount: Int): Boolean {
         if (amount < this.settings.defaultMaxVaults || player.hasPermission("svault.amount.*")) return true
         for (perm in player.effectivePermissions.values) {
-            if (!perm.permission.startsWith("svault.amount.*")) continue
+            if (!perm.permission.startsWith("svault.amount.")) continue
             try {
-                val am = perm.permission.replace("svault.amount.*", "").toInt()
+                val am = perm.permission.replace("svault.amount.", "").toInt()
                 if (am >= amount) return true
             } catch (ignore: NumberFormatException) {
             }
         }
         return false
     }
+
+    fun getVault(player: String, name: String): VaultInventory? = this.vaults.getOrDefault(player, Collections.emptyMap())[name]
 
     fun getVaultsAmount(player: Player): Int = this.vaults.getOrDefault(player.name, Collections.emptyMap()).size
 

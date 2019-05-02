@@ -31,7 +31,7 @@ command.create.exists: "Vault with this name already exists"
 command.create.success: "Vault created"
 
 command.open.permission: "You have no permission"
-command.open.description: "Open new vault"
+command.open.description: "Open vault"
 command.open.usage: "Required arguments: [VAULT NAME]"
 command.open.in-game: "In game only"
 command.open.not-found: "Vault for the given name not found"

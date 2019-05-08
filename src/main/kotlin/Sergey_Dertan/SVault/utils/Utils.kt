@@ -30,7 +30,7 @@ object Utils {
 
     /*---------------- resources ------------------*/
     @Throws(IOException::class)
-    fun copyResource(fileName: String, sourceFolder: String, targetFolder: String, clazz: Class<*>, fixMissingContents: Boolean) {
+    fun copyResource(fileName: String, sourceFolder: String, targetFolder: String, clazz: Class<*>, fixMissingContents: Boolean = true) {
         var sourceFolder = sourceFolder
         var targetFolder = targetFolder
         //TODO remove useless
@@ -81,11 +81,6 @@ object Utils {
             }
         }
         return changed
-    }
-
-    @Throws(IOException::class)
-    fun copyResource(fileName: String, sourceFolder: String, targetFolder: String, clazz: Class<*>) {
-        copyResource(fileName, sourceFolder, targetFolder, clazz, true)
     }
 
     fun resourceExists(fileName: String, folder: String, clazz: Class<*>): Boolean {

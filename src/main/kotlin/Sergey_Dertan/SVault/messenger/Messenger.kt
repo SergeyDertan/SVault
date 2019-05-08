@@ -25,7 +25,7 @@ constructor() {
         var lang: String? = null
         if (File(MAIN_FOLDER + "config.yml").exists()) {
             val cnf = Config(MAIN_FOLDER + "config.yml", Config.YAML).all
-            if (cnf.containsKey("language") && !(cnf["language"] as String).equals("default", ignoreCase = true)) {
+            if (cnf.containsKey("language") && !(cnf["language"] as String).equals("default", true)) {
                 lang = cnf["language"] as String
             }
         }
@@ -43,7 +43,7 @@ constructor() {
         instance = this
     }
 
-    fun getMessage(message: String, search: Array<String>, replace: Array<String>): String {
+    fun getMessage(message: String, search: Array<String> = emptyArray(), replace: Array<String> = emptyArray()): String {
         var msg = this.messages.getOrDefault(message, message)
         if (search.size == replace.size) {
             for (i in search.indices) {
@@ -60,20 +60,12 @@ constructor() {
         return this.getMessage(message, arrayOf(search), arrayOf(replace))
     }
 
-    fun getMessage(message: String): String {
-        return this.getMessage(message, arrayOf(), arrayOf())
-    }
-
-    fun sendMessage(target: CommandSender, message: String, search: Array<String>, replace: Array<String>) {
+    fun sendMessage(target: CommandSender, message: String, search: Array<String> = emptyArray(), replace: Array<String> = emptyArray()) {
         target.sendMessage(this.getMessage(message, search, replace))
     }
 
     fun sendMessage(target: CommandSender, message: String, search: String, replace: String) {
         this.sendMessage(target, message, arrayOf(search), arrayOf(replace))
-    }
-
-    fun sendMessage(target: CommandSender, message: String) {
-        this.sendMessage(target, message, arrayOf(), arrayOf())
     }
 
     companion object {

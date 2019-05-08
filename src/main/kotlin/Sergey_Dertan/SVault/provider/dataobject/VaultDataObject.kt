@@ -21,6 +21,8 @@ class VaultDataObject(player_: String, name_: String, items_: String) {
     var items = items_
 
     companion object {
+
+        @JvmStatic
         fun fromDataObject(vdo: VaultDataObject): Map<Int, Item> {
             val items = mutableMapOf<Int, Item>()
 
@@ -41,6 +43,7 @@ class VaultDataObject(player_: String, name_: String, items_: String) {
             return items
         }
 
+        @JvmStatic
         fun toDataObject(player: String, name: String, items: Map<Int, Item>): VaultDataObject {
             val seri = mutableMapOf<Int, MutableMap<String, Any>>()
 

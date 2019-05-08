@@ -50,6 +50,7 @@ class SVaultMain : PluginBase() {
         private lateinit var instance: SVaultMain
 
         @Suppress("UNUSED")
+        @JvmStatic
         fun getInstance(): SVaultMain = instance
     }
 

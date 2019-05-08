@@ -28,6 +28,8 @@ interface DataProvider {
         UNKNOWN;
 
         companion object {
+
+            @JvmStatic
             fun fromString(name: String): Type = when (name.toLowerCase()) {
                 "yml", "yaml" -> YAML
                 "mysql" -> MYSQL

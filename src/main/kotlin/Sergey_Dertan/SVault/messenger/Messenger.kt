@@ -73,6 +73,7 @@ constructor() {
         const val DEFAULT_LANGUAGE = "eng"
         private lateinit var instance: Messenger
 
+        @JvmStatic
         fun getInstance(): Messenger = instance
     }
 }

@@ -39,6 +39,11 @@ class SVaultMain : PluginBase() {
         private set
     lateinit var provider: DataProvider
         private set
+    /**
+     * <version, description>
+     */
+    lateinit var newVersion: Pair<String, String>
+        private set
 
     companion object {
         @JvmStatic
@@ -256,7 +261,8 @@ class SVaultMain : PluginBase() {
                 this.logger.info(this.messenger.getMessage("loading.init.update-description", "@description", description))
 
                 if (this.settings.updateNotifier) {
-                    this.server.pluginManager.registerEvents(NotifierEventHandler(ver, description), this)
+                    this.newVersion = Pair(ver, description)
+                    this.server.pluginManager.registerEvents(NotifierEventHandler, this)
                 }
             }
         } catch (ignore: Exception) {

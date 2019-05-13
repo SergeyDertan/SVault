@@ -11,8 +11,8 @@ class PostgreSQLDataProvider(settings: PostgreSQLSettings) : DatabaseDataProvide
         val pumd = PersistenceUnitMetaData("dynamic-unit", "RESOURCE_LOCAL", null)
         pumd.addProperty("javax.jdo.option.ConnectionDriverName", Driver::class.java.name)
         pumd.addProperty(
-            "javax.jdo.option.ConnectionURL",
-            "jdbc:mysql://" + settings.address + ":" + settings.port + "/" + settings.database + "?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+                "javax.jdo.option.ConnectionURL",
+                "jdbc:mysql://" + settings.address + ":" + settings.port + "/" + settings.database + "?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
         )
         pumd.addProperty("javax.jdo.option.ConnectionUserName", settings.username)
         pumd.addProperty("javax.jdo.option.ConnectionPassword", settings.password)

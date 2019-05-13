@@ -1,6 +1,5 @@
 package Sergey_Dertan.SVault.command
 
-import Sergey_Dertan.SVault.vault.VaultManager
 import cn.nukkit.Player
 import cn.nukkit.command.CommandSender
 import cn.nukkit.command.data.CommandParamType
@@ -10,7 +9,7 @@ object VaultListCommand : SVaultCommand("list") {
 
     init {
         this.commandParameters = mapOf(
-            Pair("list-vaults-owner", arrayOf(CommandParameter("vaults-owner", CommandParamType.STRING, true)))
+                Pair("list-vaults-owner", arrayOf(CommandParameter("vaults-owner", CommandParamType.STRING, true)))
         )
     }
 

@@ -13,9 +13,9 @@ import org.yaml.snakeyaml.DumperOptions
 import org.yaml.snakeyaml.Yaml
 import java.io.File
 
-class Messenger @Throws(Exception::class)
+object Messenger {
 
-constructor() {
+    const val DEFAULT_LANGUAGE = "eng"
 
     @Suppress("WEAKER_ACCESS")
     val language: String
@@ -40,7 +40,6 @@ constructor() {
         val yaml = Yaml(dumperOptions)
         @Suppress("UNCHECKED_CAST")
         this.messages = yaml.loadAs<HashMap<*, *>>(Utils.readFile(File("$LANG_FOLDER$lang.yml")), HashMap::class.java) as Map<String, String>
-        instance = this
     }
 
     fun getMessage(message: String, search: Array<String> = emptyArray(), replace: Array<String> = emptyArray()): String {
@@ -66,14 +65,5 @@ constructor() {
 
     fun sendMessage(target: CommandSender, message: String, search: String, replace: String) {
         this.sendMessage(target, message, arrayOf(search), arrayOf(replace))
-    }
-
-    companion object {
-
-        const val DEFAULT_LANGUAGE = "eng"
-        private lateinit var instance: Messenger
-
-        @JvmStatic
-        fun getInstance(): Messenger = instance
     }
 }

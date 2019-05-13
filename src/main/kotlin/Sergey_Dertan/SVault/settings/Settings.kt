@@ -7,7 +7,7 @@ import Sergey_Dertan.SVault.provider.DataProvider
 import Sergey_Dertan.SVault.utils.Utils.copyResource
 import cn.nukkit.utils.Config
 
-class Settings {
+object Settings {
 
     val updateNotifier: Boolean
     val defaultMaxVaults: Int
@@ -41,7 +41,5 @@ class Settings {
     }
 
     @Suppress("WEAKER_ACCESS")
-    fun getConfig(): Map<String, Any> {
-        return Config(MAIN_FOLDER + "config.yml", Config.YAML).all
-    }
+    fun getConfig(): Map<String, Any> = Config(MAIN_FOLDER + "config.yml", Config.YAML).all
 }

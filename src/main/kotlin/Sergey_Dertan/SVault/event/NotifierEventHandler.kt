@@ -8,7 +8,7 @@ import cn.nukkit.network.protocol.SetLocalPlayerAsInitializedPacket
 
 class NotifierEventHandler(version: String, description: String) : Listener {
 
-    private val message = Messenger.getInstance().getMessage("update-available", arrayOf("@version", "@description"), arrayOf(version, description))
+    private val message = Messenger.getMessage("update-available", arrayOf("@version", "@description"), arrayOf(version, description))
 
     @Suppress("UNUSED")
     @EventHandler

@@ -5,22 +5,23 @@ import Sergey_Dertan.SVault.messenger.Messenger
 import cn.nukkit.command.Command
 import cn.nukkit.command.CommandSender
 
-class SaveCommand(private val main: SVaultMain) : Command("save") {
+object SaveCommand : Command("save") {
 
-    private val messenger = Messenger.getInstance()
+    private val messenger = Messenger
+    private val main = SVaultMain.instance
 
     init {
-        this.permission = "svault.command.save"
-        this.description = this.messenger.getMessage("command.save.description")
+        this.permission = "svault.command.$name"
+        this.description = this.messenger.getMessage("command.$name.description")
         this.commandParameters = mutableMapOf()
     }
 
     override fun execute(sender: CommandSender, s: String, args: Array<out String>): Boolean {
         if (!this.testPermissionSilent(sender)) {
-            this.messenger.sendMessage(sender, "command.save.permission")
+            this.messenger.sendMessage(sender, "command.$name.permission")
             return false
         }
-        this.messenger.sendMessage(sender, "command.save.saving")
+        this.messenger.sendMessage(sender, "command.$name.saving")
         this.main.save(sender.name)
         return true
     }

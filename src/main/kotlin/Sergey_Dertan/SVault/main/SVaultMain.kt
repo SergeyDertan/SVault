@@ -41,17 +41,19 @@ class SVaultMain : PluginBase() {
         private set
 
     companion object {
+        @JvmStatic
         val MAIN_FOLDER = Server.getInstance().dataPath + "Sergey_Dertan_Plugins/SVault/"
+        @JvmStatic
         val LANG_FOLDER = MAIN_FOLDER + "Lang/"
+        @JvmStatic
         val VAULTS_FOLDER = MAIN_FOLDER + "Vaults/"
+        @JvmStatic
         val DB_FOLDER = MAIN_FOLDER + "DB/"
         const val VERSION_URL = "https://api.github.com/repos/SergeyDertan/SVault/releases/latest"
 
-        private lateinit var instance: SVaultMain
-
-        @Suppress("UNUSED")
         @JvmStatic
-        fun getInstance(): SVaultMain = instance
+        lateinit var instance: SVaultMain
+            private set
     }
 
     override fun onEnable() {
@@ -77,12 +79,12 @@ class SVaultMain : PluginBase() {
         this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.events-handlers"))
         this.initEventHandler()
 
+        instance = this
+
         this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.commands"))
         this.initCommands()
 
         this.initAutoSave()
-
-        instance = this
 
         this.loadPlaceholers()
 
@@ -131,7 +133,7 @@ class SVaultMain : PluginBase() {
     }
 
     private fun initVaults() {
-        this.vaultManager = VaultManager(this.settings, this.provider, this.logger)
+        this.vaultManager = VaultManager
     }
 
     private fun initAutoSave() {
@@ -141,15 +143,15 @@ class SVaultMain : PluginBase() {
     }
 
     private fun initCommands() {
-        this.mainCommand = VaultCommand()
+        this.mainCommand = VaultCommand
         this.server.commandMap.register(this.mainCommand.name, this.mainCommand)
 
-        this.registerCommand(CreateVaultCommand(this.vaultManager))
-        this.registerCommand(RemoveVaultCommand(this.vaultManager))
-        this.registerCommand(OpenVaultCommand(this.vaultManager))
-        this.registerCommand(VaultListCommand(this.vaultManager))
-        this.registerCommand(SaveCommand(this))
-        this.registerCommand(MigrateCommand(this))
+        this.registerCommand(CreateVaultCommand)
+        this.registerCommand(RemoveVaultCommand)
+        this.registerCommand(OpenVaultCommand)
+        this.registerCommand(VaultListCommand)
+        this.registerCommand(SaveCommand)
+        this.registerCommand(MigrateCommand)
     }
 
     private fun initDataProvider(): Boolean {
@@ -197,11 +199,11 @@ class SVaultMain : PluginBase() {
         LibraryLoader.load("postgresql:postgresql:9.1-901-1.jdbc4")
     }
 
-    private fun initEventHandler() = this.server.pluginManager.registerEvents(InventoryEventHandler(), this)
+    private fun initEventHandler() = this.server.pluginManager.registerEvents(InventoryEventHandler, this)
 
     private fun initSettings(): Boolean {
         try {
-            this.settings = Settings()
+            this.settings = Settings
         } catch (e: Exception) {
             this.logger.info(TextFormat.RED.toString() + this.messenger.getMessage("loading.error.resource", "@err", e.message as String))
             this.forceShutdown = true
@@ -229,7 +231,7 @@ class SVaultMain : PluginBase() {
 
     private fun initMessenger(): Boolean {
         try {
-            this.messenger = Messenger()
+            this.messenger = Messenger
         } catch (e: Exception) {
             this.logger.alert(TextFormat.RED.toString() + "Messenger initializing error")
 

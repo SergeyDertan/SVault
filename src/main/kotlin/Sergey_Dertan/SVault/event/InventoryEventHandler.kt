@@ -6,7 +6,7 @@ import cn.nukkit.event.Listener
 import cn.nukkit.event.inventory.InventoryCloseEvent
 import cn.nukkit.math.Vector3
 
-class InventoryEventHandler : Listener {
+object InventoryEventHandler : Listener {
 
     @Suppress("UNUSED")
     @EventHandler

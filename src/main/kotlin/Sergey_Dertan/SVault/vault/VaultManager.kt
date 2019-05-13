@@ -1,7 +1,7 @@
 package Sergey_Dertan.SVault.vault
 
+import Sergey_Dertan.SVault.main.SVaultMain
 import Sergey_Dertan.SVault.messenger.Messenger
-import Sergey_Dertan.SVault.provider.DataProvider
 import Sergey_Dertan.SVault.provider.dataobject.VaultDataObject
 import Sergey_Dertan.SVault.settings.Settings
 import cn.nukkit.Player
@@ -12,16 +12,16 @@ import cn.nukkit.nbt.NBTIO
 import cn.nukkit.nbt.tag.CompoundTag
 import cn.nukkit.network.protocol.BlockEntityDataPacket
 import cn.nukkit.network.protocol.UpdateBlockPacket
-import cn.nukkit.utils.Logger
 import cn.nukkit.utils.TextFormat
 import java.io.IOException
 import java.nio.ByteOrder
 import java.util.*
 
-class VaultManager(private val settings: Settings, private val provider: DataProvider, logger: Logger) {
+object VaultManager {
 
     private val vaults: MutableMap<String, MutableMap<String, VaultInventory>>
     private var last = mutableMapOf<Int, String>()
+    private val provider = SVaultMain.instance.provider
 
     init {
         this.vaults = TreeMap(String.CASE_INSENSITIVE_ORDER)
@@ -32,11 +32,11 @@ class VaultManager(private val settings: Settings, private val provider: DataPro
             this.vaults.computeIfAbsent(vdo.player) { TreeMap(String.CASE_INSENSITIVE_ORDER) }[vdo.name] = inventory
             ++amount
         }
-        logger.info(TextFormat.GREEN.toString() + Messenger.getInstance().getMessage("loading.init.vaults-loaded", "@amount", amount.toString()))
+        SVaultMain.instance.logger.info(TextFormat.GREEN.toString() + Messenger.getMessage("loading.init.vaults-loaded", "@amount", amount.toString()))
     }
 
     fun hasAmountPermission(player: Player, amount: Int): Boolean {
-        if (amount < this.settings.defaultMaxVaults || player.hasPermission("svault.amount.*")) return true
+        if (amount < Settings.defaultMaxVaults || player.hasPermission("svault.amount.*")) return true
         for (perm in player.effectivePermissions.values) {
             if (!perm.permission.startsWith("svault.amount.")) continue
             try {
@@ -110,7 +110,7 @@ class VaultManager(private val settings: Settings, private val provider: DataPro
         pk2.z = pk1.z
 
         val nbt = CompoundTag()
-        nbt.putString("CustomName", Messenger.getInstance().getMessage("vault-inventory-name", "@name", name))
+        nbt.putString("CustomName", Messenger.getMessage("vault-inventory-name", "@name", name))
         try {
             pk2.namedTag = NBTIO.write(nbt, ByteOrder.LITTLE_ENDIAN, true)
         } catch (ignore: IOException) {

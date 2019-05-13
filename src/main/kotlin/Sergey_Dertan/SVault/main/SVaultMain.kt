@@ -73,20 +73,20 @@ class SVaultMain : PluginBase() {
         this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.data-provider"))
         if (!this.initDataProvider()) return
 
+        instance = this
+
         this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.vaults"))
         this.initVaults()
 
         this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.events-handlers"))
         this.initEventHandler()
 
-        instance = this
-
         this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.commands"))
         this.initCommands()
 
         this.initAutoSave()
 
-        this.loadPlaceholers()
+        this.loadPlaceholders()
 
         this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.successful", "@time", (System.currentTimeMillis() - start).toString()))
 
@@ -263,7 +263,7 @@ class SVaultMain : PluginBase() {
         }
     }
 
-    private fun loadPlaceholers() {
+    private fun loadPlaceholders() {
         if (this.server.pluginManager.getPlugin("PlaceholderAPI") != null) {
             PlaceholdersLoader
         }

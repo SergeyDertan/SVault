@@ -62,38 +62,26 @@ class SVaultMain : PluginBase() {
     }
 
     override fun onEnable() {
-        val start = System.currentTimeMillis()
-
         if (!this.createDirectories()) return
         if (!this.initMessenger()) return
 
-        this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.start", "@ver", this.description.version))
-
-        this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.libraries"))
         if (!this.loadLibraries()) return
 
-        this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.settings"))
         if (!this.initSettings()) return
 
-        this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.data-provider"))
         if (!this.initDataProvider()) return
 
         instance = this
 
-        this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.vaults"))
         this.initVaults()
 
-        this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.events-handlers"))
         this.initEventHandler()
 
-        this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.commands"))
         this.initCommands()
 
         this.initAutoSave()
 
         this.loadPlaceholders()
-
-        this.logger.info(TextFormat.GREEN.toString() + this.messenger.getMessage("loading.init.successful", "@time", (System.currentTimeMillis() - start).toString()))
 
         this.server.scheduler.scheduleTask(this, { this.checkUpdate() }, true)
     }

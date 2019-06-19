@@ -1,12 +1,14 @@
 package Sergey_Dertan.SVault.command
 
+import Sergey_Dertan.SVault.main.SVaultMain
 import Sergey_Dertan.SVault.messenger.Messenger
 import cn.nukkit.command.Command
 import cn.nukkit.command.CommandSender
+import cn.nukkit.command.PluginIdentifiableCommand
 import cn.nukkit.command.data.CommandParameter
 import java.util.*
 
-object VaultCommand : Command("vault") {
+object VaultCommand : Command("vault"), PluginIdentifiableCommand {
 
     private val messenger = Messenger
     private val commands = mutableMapOf<String, Command>()
@@ -51,4 +53,6 @@ object VaultCommand : Command("vault") {
         }
         this.commandParameters = params
     }
+
+    override fun getPlugin() = SVaultMain.instance
 }

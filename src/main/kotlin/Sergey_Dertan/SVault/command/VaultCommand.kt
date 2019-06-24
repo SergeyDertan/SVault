@@ -6,7 +6,6 @@ import cn.nukkit.command.Command
 import cn.nukkit.command.CommandSender
 import cn.nukkit.command.PluginIdentifiableCommand
 import cn.nukkit.command.data.CommandParameter
-import java.util.*
 
 object VaultCommand : Command("vault"), PluginIdentifiableCommand {
 
@@ -33,7 +32,7 @@ object VaultCommand : Command("vault"), PluginIdentifiableCommand {
             this.messenger.sendMessage(sender, "command.$name.command-not-found", "@name", args[0])
             return false
         }
-        val newArgs = if (args.size == 1) arrayOf() else Arrays.copyOfRange(args, 1, args.size)
+        val newArgs = if (args.size == 1) arrayOf() else args.copyOfRange(1, args.size)
         cmd.execute(sender, cmd.name, newArgs)
         return false
     }

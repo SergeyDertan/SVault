@@ -6,6 +6,8 @@ author: Sergey_Dertan
 website: https://vk.com/sergey_dertan
 load: STARTUP
 prefix: '§eSVault§f'
+depend:
+  - KotlinLib
 permissions:
   svault.*:
     default: false

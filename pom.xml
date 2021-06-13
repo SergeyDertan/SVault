@@ -54,7 +54,7 @@
         <dependency>
             <groupId>cn.nukkit</groupId>
             <artifactId>nukkit</artifactId>
-            <version>LATEST</version>
+            <version>1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -114,7 +114,7 @@
         <dependency>
             <groupId>com.creeperface.nukkit.placeholderapi</groupId>
             <artifactId>PlaceholderAPI</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.4-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
@@ -123,7 +123,7 @@
         <java.version>1.8</java.version>
         <github.global.server>github</github.global.server>
         <github.maven-plugin>0.12</github.maven-plugin>
-        <kotlin.version>1.3.31</kotlin.version>
+        <kotlin.version>1.5.0</kotlin.version>
     </properties>
     <distributionManagement>
         <repository>
